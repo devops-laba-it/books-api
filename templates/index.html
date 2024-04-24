@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Add new book to library! {% endblock %}</h1>
+<form method="post">
+    <div class="form-group">
+        <label for="author">Author*</label>
+        <input type="text" name="author" required
+               placeholder="Author Name" class="form-control"
+               value="" autofocus></input>
+
+        <label for="title">Title*</label>
+        <input type="text" name="title" required
+               placeholder="Book title" class="form-control"
+               value="" autofocus></input>
+
+        <label for="url">Image</label>
+        <input type="text" name="url"
+               placeholder="Image Url" class="form-control"
+               value="" autofocus></input>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+{% if book %}
+<hr>
+<h2>{{ book.title }}</h2>
+<span>{{ author }}</span>
+<img src="{{ book.url }}" alt="{{ book.title }}" class="img-thumbnail">
+{% endif %}
+{% endblock %}
