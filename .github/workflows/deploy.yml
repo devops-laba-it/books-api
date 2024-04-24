@@ -29,6 +29,12 @@ jobs:
     - name: Build application
       run: make build
 
+    - name: Upload app.zip as a versioned artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: app-archive-${{ github.sha }}-${{ github.run_number }}
+        path: app.zip
+
     # - name: Configure AWS credentials
     #   uses: aws-actions/configure-aws-credentials@v2
     #   with:
