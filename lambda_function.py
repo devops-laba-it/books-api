@@ -3,7 +3,7 @@ import os
 
 import awsgi
 import boto3
-from flask import Flask, g, render_template, request
+from flask import Flask, render_template, request
 import uuid
 
 app = Flask(__name__)
