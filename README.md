@@ -1,25 +1,28 @@
-# Books api
+# Books API
 
-Jest to prosta aplikacja do zarządzania książkami.
-Aplikacja pozwala na dodawanie oraz przeglądanie książek.
+Books API is a simple book management application that allows users to add and browse books. This is a demonstration application designed for deployment on AWS.
 
-To przykładowa apliakcja, która należy wdrożyć na AWS.
+## Features
 
-## Lambda
-Do wdrożenia aplikacji na AWS wykorzystano funkcję lambda.
-Jest to funkcja triggerowana zapytaniem HTTP. 
+- **Add Books**: Users can add new book records to the database.
+- **Browse Books**: Users can view a list of all books available.
 
-## Zmienne środowiskowe
-Aplikacja wykorzystuje zmienne środowiskowe, które należy ustawić w AWS.
+## Deployment
 
-- `BOOKS_AWS_ACCESS_KEY_ID`
-- `BOOKS_AWS_SECRET_ACCESS_KEY`
-- `BOOKS_AWS_REGION`
-- `BOOKS_TABLE_NAME`
-- `BOOKS_QUEUE_URL`
-- `BOOKS_IMAGE_API_URL`
+This application utilizes AWS Lambda for deployment, which is triggered by HTTP requests.
 
-Przykładowy sposób ustawienia zmiennych środowiskowych:
+## Environment Variables
+
+The application requires setting environment variables in AWS:
+
+- `BOOKS_AWS_ACCESS_KEY_ID`: AWS access key ID.
+- `BOOKS_AWS_SECRET_ACCESS_KEY`: AWS secret access key.
+- `BOOKS_AWS_REGION`: AWS region where the service is hosted.
+- `BOOKS_TABLE_NAME`: Name of the DynamoDB table used.
+- `BOOKS_QUEUE_URL`: URL of the SQS queue.
+- `BOOKS_IMAGE_API_URL`: URL to fetch images from AWS Lambda.
+
+Example of setting environment variables:
 
 ```bash
 export BOOKS_AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
@@ -28,27 +31,35 @@ export BOOKS_AWS_REGION=us-east-1
 export BOOKS_TABLE_NAME=books-dev
 export BOOKS_QUEUE_URL=https://sqs.us-east-1.amazonaws.com/043026380068/new-book
 export BOOKS_IMAGE_API_URL=https://n24eaac7mr3xcxccasboewsit40atznr.lambda-url.us-east-1.on.aws
-````
-
-Uwaga: Aby uniknąć przekazywania access key, secret acccess key oraz regionu, można użyć odpowiedniego Service Account. 
-
-
-## Pipeline
-
-```bash
-make test
 ```
 
-```bash
-make lint
-```
+**Note**: To avoid explicitly passing AWS credentials and region, consider using an appropriate Service Account.
 
-Aby utworzyć plik `app.zip` należy wykonać polecenie:
+## Continuous Deployment Pipeline
 
-```bash
-make build
-```
+### Automated Deployment
 
-Powyższy plik, należy wgrać na AWS jako funkcję lambda.
+The application is set up with a continuous deployment pipeline that automatically deploys to AWS Lambda upon every push to the `main` branch. The deployment includes the following steps:
 
+1. **Testing**:
+   Run tests to ensure that the recent changes pass all checks.
+   ```bash
+   make test
+   ```
 
+2. **Linting**:
+   Perform linting to ensure code quality.
+   ```bash
+   make lint
+   ```
+
+3. **Building**:
+   Create the deployable `app.zip` file.
+   ```bash
+   make build
+   ```
+
+4. **Deployment**:
+   Upload the `app.zip` file to AWS Lambda.
+
+Ensure that AWS credentials and all required environment variables are set correctly for the deployment script to execute without issues.
