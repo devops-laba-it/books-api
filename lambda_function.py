@@ -1,10 +1,10 @@
 import json
 import os
+import uuid
 
 import awsgi
 import boto3
 from flask import Flask, render_template, request
-import uuid
 
 app = Flask(__name__)
 
